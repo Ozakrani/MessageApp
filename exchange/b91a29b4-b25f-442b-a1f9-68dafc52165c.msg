@@ -1,0 +1,7 @@
+#
+#Wed Mar 04 17:09:23 CET 2026
+Date=1772640563960
+Recipient=cc5692e0-e3e0-417d-9cd2-050ebdd27db9
+Sender=d1fd7f90-0f7d-4a04-ac40-f63f9ea00613
+Text=HELLO
+UUID=b91a29b4-b25f-442b-a1f9-68dafc52165c
