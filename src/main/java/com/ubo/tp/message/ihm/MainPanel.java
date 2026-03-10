@@ -30,7 +30,9 @@ public class MainPanel extends JPanel implements IDatabaseObserver {
 
         setLayout(new BorderLayout());
 
-        // ===== HEADER =====
+        /* =========================
+           HEADER
+           ========================= */
 
         JPanel headerPanel = new JPanel(new BorderLayout());
 
@@ -40,7 +42,11 @@ public class MainPanel extends JPanel implements IDatabaseObserver {
         JButton btnLogout = new JButton("Déconnexion");
 
         btnLogout.addActionListener(e -> {
+
+            mConnectedUser.setOnline(false);
+            mDataManager.updateUser(mConnectedUser);
             mSession.disconnect();
+
         });
 
         headerPanel.add(lblWelcome, BorderLayout.WEST);
@@ -49,7 +55,9 @@ public class MainPanel extends JPanel implements IDatabaseObserver {
         add(headerPanel, BorderLayout.NORTH);
 
 
-        // ===== ACTIONS UTILISATEUR =====
+        /* =========================
+           ACTIONS UTILISATEUR
+           ========================= */
 
         JButton btnEditProfile = new JButton("Modifier mon nom");
         JButton btnDeleteAccount = new JButton("Supprimer mon compte");
@@ -61,7 +69,9 @@ public class MainPanel extends JPanel implements IDatabaseObserver {
         add(profilePanel, BorderLayout.SOUTH);
 
 
-        // ===== MODIFIER NOM =====
+        /* =========================
+           MODIFIER NOM
+           ========================= */
 
         btnEditProfile.addActionListener(e -> {
 
@@ -83,7 +93,9 @@ public class MainPanel extends JPanel implements IDatabaseObserver {
         });
 
 
-        // ===== SUPPRIMER COMPTE =====
+        /* =========================
+           SUPPRIMER COMPTE
+           ========================= */
 
         btnDeleteAccount.addActionListener(e -> {
 
@@ -109,12 +121,16 @@ public class MainPanel extends JPanel implements IDatabaseObserver {
         });
 
 
-        // ===== CONVERSATION =====
+        /* =========================
+           CONVERSATION
+           ========================= */
 
         mConversationPanel = new ConversationPanel(user, dataManager);
 
 
-        // ===== USERS =====
+        /* =========================
+           USERS
+           ========================= */
 
         UserListController userListCtrl = new UserListController(
                 user,
@@ -123,17 +139,23 @@ public class MainPanel extends JPanel implements IDatabaseObserver {
         );
 
 
-        // ===== CHANNELS =====
+        /* =========================
+           CHANNELS
+           ========================= */
 
         ChannelController channelController = new ChannelController(dataManager);
-        ChannelListView channelListView = new ChannelListView(channelController, user);
+
+        ChannelListView channelListView =
+                new ChannelListView(channelController, user);
 
         channelListView.setChannelSelectionListener(
                 channel -> mConversationPanel.showChannelConversation(channel)
         );
 
 
-        // ===== LEFT PANEL =====
+        /* =========================
+           LEFT PANEL
+           ========================= */
 
         JPanel leftPanel = new JPanel(new BorderLayout());
         leftPanel.setPreferredSize(new Dimension(250,0));
@@ -142,7 +164,9 @@ public class MainPanel extends JPanel implements IDatabaseObserver {
         leftPanel.add(channelListView, BorderLayout.SOUTH);
 
 
-        // ===== SPLIT =====
+        /* =========================
+           SPLIT
+           ========================= */
 
         JSplitPane splitPane = new JSplitPane(
                 JSplitPane.HORIZONTAL_SPLIT,

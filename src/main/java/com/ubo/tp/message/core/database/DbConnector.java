@@ -3,6 +3,7 @@ import com.ubo.tp.message.core.database.IDatabase;
 import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
+import main.java.com.ubo.tp.message.core.database.Database;
 
 /**
  * Classe pour adresser la BDD directement.
@@ -79,8 +80,8 @@ public class DbConnector {
 	 *
 	 * @param userToModify
 	 */
-	public void modifiyUser(User userToModify) {
-		this.mDatabase.modifiyUser(userToModify);
+	public void modifyUser(User userToModify) {
+		this.mDatabase.modifyUser(userToModify);
 	}
 
 	/**

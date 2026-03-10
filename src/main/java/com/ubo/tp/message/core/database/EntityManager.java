@@ -230,9 +230,7 @@ public class EntityManager implements IWatchableDirectoryObserver {
 		// Récupération et parcours de la liste des utilisateurs modifiés
 		for (User modifiedUser : this.extractAllUsers(userFiles)) {
 			// Modification de l'utilisateur
-			this.mDatabase.modifiyUser(modifiedUser);
-
-			// Stockage dans la map
+			this.mDatabase.modifyUser(modifiedUser);			// Stockage dans la map
 			mUserMap.put(modifiedUser.getUuid(), modifiedUser);
 		}
 

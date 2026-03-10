@@ -46,19 +46,17 @@ public class ChannelListView extends JPanel {
         setLayout(new BorderLayout(5,5));
         setBorder(BorderFactory.createTitledBorder("Canaux"));
 
-        // ===== BARRE DE RECHERCHE =====
+        // ===== CHAMP RECHERCHE =====
 
         searchField = new JTextField();
-        searchField.setPreferredSize(new Dimension(200,25));
         searchField.setToolTipText("Rechercher un canal...");
-        searchField.setText("");
 
         searchField.addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyReleased(KeyEvent e) {
 
-                String search = searchField.getText().toLowerCase().trim();
+                String search = searchField.getText().toLowerCase();
 
                 if(search.isEmpty()){
                     refreshChannels();
@@ -84,19 +82,14 @@ public class ChannelListView extends JPanel {
         add(searchField, BorderLayout.NORTH);
 
 
-        // ===== LISTE DES CANAUX =====
+        // ===== LISTE =====
 
         mChannelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         mChannelList.setCellRenderer(new DefaultListCellRenderer(){
 
             @Override
-            public Component getListCellRendererComponent(
-                    JList<?> list,
-                    Object value,
-                    int index,
-                    boolean isSelected,
-                    boolean cellHasFocus){
+            public Component getListCellRendererComponent(JList<?> list,Object value,int index,boolean isSelected,boolean cellHasFocus){
 
                 Channel channel = (Channel) value;
 
@@ -212,7 +205,6 @@ public class ChannelListView extends JPanel {
 
 
     // ===== MODIFIER MEMBRES CANAL =====
-
     private void handleEdit(){
 
         Channel selected = mChannelList.getSelectedValue();

@@ -1,7 +1,0 @@
-#
-#Tue Mar 03 16:22:42 CET 2026
-Date=1772551362615
-Recipient=4ad76c7e-3196-4ef6-9674-f194ade9c803
-Sender=d1fd7f90-0f7d-4a04-ac40-f63f9ea00613
-Text=cv
-UUID=4482de44-1baa-466a-ad01-cea087bb9063

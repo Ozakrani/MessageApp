@@ -1,7 +1,0 @@
-#
-#Wed Mar 04 14:43:35 CET 2026
-Date=1772631815078
-Recipient=6e9fc8c2-4bc0-4ab6-ac27-ecf0779c8e30
-Sender=0a2fa1df-c172-4169-b016-d2a1868018f0
-Text=hi baba
-UUID=d438e8ba-4335-458e-9e21-158460918499

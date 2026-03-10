@@ -1,7 +1,0 @@
-#
-#Tue Mar 03 16:22:19 CET 2026
-Date=1772551339763
-Recipient=d1fd7f90-0f7d-4a04-ac40-f63f9ea00613
-Sender=4ad76c7e-3196-4ef6-9674-f194ade9c803
-Text=hi asmae
-UUID=462df50d-8c8a-4429-8261-c74801d5922a

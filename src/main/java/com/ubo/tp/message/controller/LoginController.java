@@ -14,7 +14,6 @@ public class LoginController {
         this.session = session;
     }
 
-
     public String register(String tag, String name, String password) {
 
         if (tag == null || tag.isEmpty() || name == null || name.isEmpty()) {
@@ -29,7 +28,6 @@ public class LoginController {
 
         return "SUCCESS";
     }
-
 
     public String login(String tag, String password) {
 
@@ -49,9 +47,7 @@ public class LoginController {
         }
 
         user.setOnline(true);
-        dataManager.modifyUser(user.getUuid(), user);
-
-        // MAJ SESSION
+        dataManager.updateUser(user);
         session.connect(user);
 
         return "SUCCESS";

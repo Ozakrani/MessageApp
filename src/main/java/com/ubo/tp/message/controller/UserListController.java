@@ -68,9 +68,22 @@ public class UserListController implements IDatabaseObserver {
 
     public UserListView getView() { return mView; }
 
-    @Override public void notifyUserAdded(User u)           { refreshList(mView.getSearchText()); }
-    @Override public void notifyUserDeleted(User u)         { refreshList(mView.getSearchText()); }
-    @Override public void notifyUserModified(User u)        { refreshList(mView.getSearchText()); }
+    @Override public void notifyUserAdded(User u) {
+        refreshList(mView.getSearchText());
+    }
+
+    @Override public void notifyUserDeleted(User u) {
+        refreshList(mView.getSearchText());
+    }
+
+    @Override
+    public void notifyUserModified(User u) {
+
+        refreshList(mView.getSearchText());
+
+        System.out.println("User status changed: " + u.getUserTag() + " online=" + u.isOnline());
+
+    }
     @Override public void notifyMessageAdded(Message m)     {}
     @Override public void notifyMessageDeleted(Message m)   {}
     @Override public void notifyMessageModified(Message m)  {}

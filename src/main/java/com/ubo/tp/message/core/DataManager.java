@@ -74,6 +74,7 @@ public class DataManager {
 
 	public void updateUser(User user){
 		mEntityManager.writeUserFile(user);
+		mDatabase.modifyUser(user);
 	}
 	/**
 	 * Retourne la liste des Messages.

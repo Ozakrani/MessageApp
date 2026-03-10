@@ -144,15 +144,16 @@ public class Database implements IDatabase {
 	 *
 	 * @param userToModify
 	 */
-	protected void modifiyUser(User userToModify) {
-		// Ré-ajout pour écraser l'ancienne copie.
-		this.mUsers.remove(userToModify);
-		this.mUsers.add(userToModify);
+	@Override
+	public void modifyUser(User userToModify) {
 
-		// Notification des observateurs
+		mUsers.remove(userToModify);
+		mUsers.add(userToModify);
+
 		for (IDatabaseObserver observer : mObservers) {
 			observer.notifyUserModified(userToModify);
 		}
+
 	}
 
 	/**
