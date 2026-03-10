@@ -1,9 +1,10 @@
 package main.java.com.ubo.tp.message.controller;
 
-import main.java.com.ubo.tp.message.core.DataManager;
+import com.ubo.tp.message.core.DataManager;
 import main.java.com.ubo.tp.message.core.session.Session;
 import main.java.com.ubo.tp.message.datamodel.User;
 
+import javax.swing.*;
 import java.util.Set;
 
 public class UserController {
@@ -46,6 +47,28 @@ public class UserController {
 
         session.disconnect();
     }
+    public void createUser() {
 
+        String tag = JOptionPane.showInputDialog("Tag utilisateur");
 
+        if(tag == null || tag.trim().isEmpty()) return;
+
+        String name = JOptionPane.showInputDialog("Nom");
+
+        if(name == null || name.trim().isEmpty()) return;
+
+        String password = JOptionPane.showInputDialog("Mot de passe");
+
+        dataManager.createUser(tag, name, password);
+    }
+
+    public void deleteUser(User user){
+
+        if(user == null){
+            JOptionPane.showMessageDialog(null,"Sélectionnez un utilisateur");
+            return;
+        }
+
+        dataManager.deleteUser(user);
+    }
 }

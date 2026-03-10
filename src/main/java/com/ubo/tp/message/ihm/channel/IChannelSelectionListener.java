@@ -1,6 +1,6 @@
 package main.java.com.ubo.tp.message.ihm.channel;
 
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.datamodel.Channel;
 
 /**
  * Interface pour notifier MainPanel qu'un canal a été sélectionné.

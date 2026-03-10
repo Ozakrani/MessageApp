@@ -16,9 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import main.java.com.ubo.tp.message.common.Constants;
-import main.java.com.ubo.tp.message.core.DataManager;
+import com.ubo.tp.message.core.DataManager;
 import main.java.com.ubo.tp.message.core.database.DbConnector;
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
 

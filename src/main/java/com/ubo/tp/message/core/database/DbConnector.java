@@ -1,6 +1,6 @@
 package main.java.com.ubo.tp.message.core.database;
-
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.core.database.IDatabase;
+import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
 

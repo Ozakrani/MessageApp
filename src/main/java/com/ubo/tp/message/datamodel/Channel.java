@@ -1,22 +1,22 @@
-package main.java.com.ubo.tp.message.datamodel;
+package com.ubo.tp.message.datamodel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
+import  main.java.com.ubo.tp.message.datamodel.User;
 /**
  * Classe du modèle représentant un canal.
  *
  * @author S.Lucas
  */
-public class Channel extends AbstractMessageAppObject implements IMessageRecipient {
+public class Channel extends main.java.com.ubo.tp.message.datamodel.AbstractMessageAppObject implements main.java.com.ubo.tp.message.datamodel.IMessageRecipient {
 
 	/**
 	 * Créateur du canal.
 	 */
-	protected final User mCreator;
+	protected final main.java.com.ubo.tp.message.datamodel.User mCreator;
 
 	/**
 	 * Nom du canal.
@@ -31,7 +31,7 @@ public class Channel extends AbstractMessageAppObject implements IMessageRecipie
 	/**
 	 * Liste des Utilisateurs du canal.
 	 */
-	protected final Set<User> mUsers = new HashSet<User>();
+	protected final Set<main.java.com.ubo.tp.message.datamodel.User> mUsers = new HashSet<main.java.com.ubo.tp.message.datamodel.User>();
 
 	/**
 	 * Constructeur.
@@ -39,7 +39,7 @@ public class Channel extends AbstractMessageAppObject implements IMessageRecipie
 	 * @param sender utilisateur à l'origine du canal.
 	 * @param name   Nom du canal.
 	 */
-	public Channel(User creator, String name) {
+	public Channel(main.java.com.ubo.tp.message.datamodel.User creator, String name) {
 		this(UUID.randomUUID(), creator, name);
 	}
 
@@ -62,7 +62,7 @@ public class Channel extends AbstractMessageAppObject implements IMessageRecipie
 	 * @param sender utilisateur à l'origine du canal.
 	 * @param name   Nom du canal.
 	 */
-	public Channel(User creator, String name, List<User> users) {
+	public Channel(main.java.com.ubo.tp.message.datamodel.User creator, String name, List<User> users) {
 		this(UUID.randomUUID(), creator, name, users);
 	}
 

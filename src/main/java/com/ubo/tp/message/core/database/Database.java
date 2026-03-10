@@ -3,10 +3,12 @@ package main.java.com.ubo.tp.message.core.database;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.ubo.tp.message.core.database.IDatabase;
 import main.java.com.ubo.tp.message.common.Constants;
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
+import main.java.com.ubo.tp.message.core.database.IDatabaseObserver ;
 
 /**
  * Classe représentant les données chargées dans l'application.
@@ -82,7 +84,7 @@ public class Database implements IDatabase {
 	 *
 	 * @param messageToRemove
 	 */
-	protected void deleteMessage(Message messageToRemove) {
+	public void deleteMessage(Message messageToRemove) {
 		// Suppression du message
 		this.mMessages.remove(messageToRemove);
 
@@ -128,11 +130,10 @@ public class Database implements IDatabase {
 	 *
 	 * @param userToRemove
 	 */
-	protected void deleteUser(User userToRemove) {
-		// Suppression de l'utilisateur
+	public void deleteUser(User userToRemove) {
+
 		this.mUsers.remove(userToRemove);
 
-		// Notification des observateurs
 		for (IDatabaseObserver observer : mObservers) {
 			observer.notifyUserDeleted(userToRemove);
 		}

@@ -1,11 +1,12 @@
-package main.java.com.ubo.tp.message.ihm;
+package com.ubo.tp.message.ihm;
 
 import java.io.File;
 import javax.swing.UIManager;
 
-import main.java.com.ubo.tp.message.core.DataManager;
+import com.ubo.tp.message.ihm.MessageAppMainView;
+import com.ubo.tp.message.core.DataManager;
 import main.java.com.ubo.tp.message.core.session.Session;
-
+import com.ubo.tp.message.ihm.MessageAppMainView;
 /**
  * Classe principale l'application.
  *

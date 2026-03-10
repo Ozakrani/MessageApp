@@ -1,6 +1,6 @@
 package main.java.com.ubo.tp.message.controller;
 
-import main.java.com.ubo.tp.message.core.DataManager;
+import com.ubo.tp.message.core.DataManager;
 import main.java.com.ubo.tp.message.core.session.Session;
 import main.java.com.ubo.tp.message.datamodel.User;
 

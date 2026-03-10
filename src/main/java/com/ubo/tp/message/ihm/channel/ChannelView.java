@@ -1,5 +1,5 @@
 package main.java.com.ubo.tp.message.ihm.channel;
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.User;
 
 import javax.swing.*;

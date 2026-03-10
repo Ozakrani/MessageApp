@@ -1,16 +1,14 @@
-package main.java.com.ubo.tp.message.core;
+package com.ubo.tp.message.core;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import main.java.com.ubo.tp.message.core.database.EntityManager;
-import main.java.com.ubo.tp.message.core.database.IDatabase;
+import com.ubo.tp.message.core.database.IDatabase;
+
 import main.java.com.ubo.tp.message.core.database.IDatabaseObserver;
 import main.java.com.ubo.tp.message.core.directory.IWatchableDirectory;
 import main.java.com.ubo.tp.message.core.directory.WatchableDirectory;
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.IMessageRecipient;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
@@ -70,6 +68,13 @@ public class DataManager {
 		return this.mDatabase.getUsers();
 	}
 
+	public void deleteUser(User user){
+		mEntityManager.deleteUserFile(user);
+	}
+
+	public void updateUser(User user){
+		mEntityManager.writeUserFile(user);
+	}
 	/**
 	 * Retourne la liste des Messages.
 	 */
@@ -243,9 +248,6 @@ public class DataManager {
 		this.mEntityManager.writeUserFile(modifiedUser);
 	}
 
-	public void deleteUser(User user) {
-		//mEntityManager.deleteUserFile(user);
-	}
 	/**
 	 * Supprime un message du répertoire d'échange.
 	 * SRS-MAP-MSG-006
@@ -253,8 +255,16 @@ public class DataManager {
 	 * @param message Le message à supprimer.
 	 */
 	public void deleteMessage(Message message) {
-		this.mEntityManager.deleteMessageFile(message);
+
+		if (message == null) return;
+
+		// suppression du fichier
+		mEntityManager.deleteMessageFile(message);
+
+		// suppression immédiate en mémoire
+		mDatabase.deleteMessage(message);
 	}
+
 	private final List<Channel> channels = new ArrayList<>();
 
 	public void addChannel(Channel channel) {
@@ -266,6 +276,23 @@ public class DataManager {
 	}
 	public void deleteChannel(Channel channel) {
 		this.mEntityManager.deleteChannelFile(channel);
+	}
+	public Set<Message> searchMessages(UUID channelId, String keyword) {
+
+		Set<Message> result = new HashSet<>();
+
+		for (Message message : mDatabase.getMessages()) {
+
+			if (message.getRecipient().equals(channelId)) {
+
+				if (message.getText().toLowerCase().contains(keyword.toLowerCase())) {
+					result.add(message);
+				}
+
+			}
+		}
+
+		return result;
 	}
 
 

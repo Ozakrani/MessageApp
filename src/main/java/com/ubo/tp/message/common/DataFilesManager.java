@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
 

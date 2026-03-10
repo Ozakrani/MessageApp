@@ -1,8 +1,8 @@
-package main.java.com.ubo.tp.message.core.database;
+package com.ubo.tp.message.core.database;
 
 import java.util.Set;
 
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
 
@@ -18,14 +18,14 @@ public interface IDatabase {
 	 *
 	 * @param observer
 	 */
-	void addObserver(IDatabaseObserver observer);
+	void addObserver(main.java.com.ubo.tp.message.core.database.IDatabaseObserver observer);
 
 	/**
 	 * Supprime un observateur sur les modifications de la base de données.
 	 *
 	 * @param observer
 	 */
-	void removeObserver(IDatabaseObserver observer);
+	void removeObserver(main.java.com.ubo.tp.message.core.database.IDatabaseObserver observer);
 
 	/**
 	 * Retourne la liste des utilisateurs.
@@ -41,4 +41,11 @@ public interface IDatabase {
 	 * Retourne la liste des cannaux.
 	 */
 	Set<Channel> getChannels();
+
+/**
+	 * Ajoute un message à la base de données.
+	 *
+	 */
+	void deleteMessage(Message message);
+	void deleteUser(User user);
 }

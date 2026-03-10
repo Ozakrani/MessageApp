@@ -17,6 +17,7 @@ public class UserListView extends JPanel {
     private JTextField mSearchField;
     private JPanel     mListPanel;
     private JLabel     mTitleLabel;
+    JList<User> userList;
 
     public UserListView() {
         initGUI();
@@ -57,6 +58,10 @@ public class UserListView extends JPanel {
 
         add(topPanel,   BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public User getSelectedUser() {
+        return userList.getSelectedValue();
     }
 
     // ---------------------------------------------------------------

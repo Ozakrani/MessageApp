@@ -114,18 +114,6 @@ public class User extends AbstractMessageAppObject implements IMessageRecipient 
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
-
-		sb.append("[");
-		sb.append(this.getClass().getName());
-		sb.append("] : ");
-		sb.append(this.getUuid());
-		sb.append(" {@");
-		sb.append(this.getUserTag());
-		sb.append(" / ");
-		sb.append(this.getName());
-		sb.append("}");
-
-		return sb.toString();
+		return mName + " (@" + mUserTag + ")";
 	}
 }

@@ -1,6 +1,6 @@
 package main.java.com.ubo.tp.message.controller;
 import main.java.com.ubo.tp.message.datamodel.User;
-import main.java.com.ubo.tp.message.ihm.IConversationListener;
+import com.ubo.tp.message.ihm.IConversationListener;
 import main.java.com.ubo.tp.message.ihm.user.UserView;
 
 import javax.swing.*;

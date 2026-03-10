@@ -1,7 +1,7 @@
-package main.java.com.ubo.tp.message.controller;
+package com.ubo.tp.message.controller;
 
-import main.java.com.ubo.tp.message.core.DataManager;
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.core.DataManager;
+import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.User;
 
 import javax.swing.*;
@@ -25,17 +25,21 @@ public class ChannelController {
      * Crée un canal public (SRS-MAP-CHN-003).
      * Constructeur : Channel(User creator, String name)
      */
-    public void createChannel(User creator, String channelName) {
+    public Channel createChannel(User creator, String channelName) {
+
         if (channelName == null || channelName.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "Le nom du canal ne peut pas être vide.",
                     "Erreur", JOptionPane.WARNING_MESSAGE);
-            return;
+            return null;
         }
 
-        // Canal public — pas de liste d'utilisateurs
         Channel channel = new Channel(creator, channelName.trim());
+
+        // écrit le fichier .chn
         mDataManager.sendChannel(channel);
+
+        return channel;
     }
 
     /**
@@ -58,72 +62,128 @@ public class ChannelController {
      * Supprime un canal (SRS-MAP-CHN-006).
      * Vérifie que l'utilisateur connecté est bien le créateur.
      */
-    public void deleteChannel(Channel channel, User connectedUser) {
-        // Vérification : seul le créateur peut supprimer (SRS-MAP-CHN-006)
+    public boolean deleteChannel(Channel channel, User connectedUser) {
+
+        // Vérification : seul le créateur peut supprimer
         if (!channel.getCreator().getUserTag().equals(connectedUser.getUserTag())) {
+
             JOptionPane.showMessageDialog(null,
                     "Vous ne pouvez supprimer que les canaux dont vous êtes le créateur.",
-                    "Erreur", JOptionPane.WARNING_MESSAGE);
-            return;
+                    "Erreur",
+                    JOptionPane.WARNING_MESSAGE);
+
+            return false;
         }
 
-        int choice = JOptionPane.showConfirmDialog(null,
+        int choice = JOptionPane.showConfirmDialog(
+                null,
                 "Voulez-vous vraiment supprimer le canal \"" + channel.getName() + "\" ?",
                 "Supprimer le canal",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
+                JOptionPane.WARNING_MESSAGE
+        );
 
         if (choice == JOptionPane.YES_OPTION) {
-            mDataManager.deleteChannel(channel);
+
+            mDataManager.removeChannel(channel);
+
+            return true;
         }
+
+        return false;
     }
 
-    /**
-     * Retourne la liste de tous les canaux.
-     * SRS-MAP-CHN-001
-     */
-    public List<Channel> getChannels() {
-        return new ArrayList<>(mDataManager.getChannels());
+
+/**
+ * Retourne la liste de tous les canaux.
+ * SRS-MAP-CHN-001
+ */
+public List<Channel> getChannels() {
+    return new ArrayList<>(mDataManager.getChannels());
+}
+
+/**
+ * Vérifie si l'utilisateur connecté peut supprimer un canal.
+ */
+public boolean canDelete(Channel channel, User connectedUser) {
+    if (channel == null || connectedUser == null) return false;
+    return channel.getCreator().getUserTag().equals(connectedUser.getUserTag());
+}
+public User findUser(String tag) {
+    return mDataManager.getUser(tag);
+}
+
+/** Ajoute un utilisateur à un canal privé (SRS-MAP-CHN-007). */
+public void addUserToChannel(Channel channel, User userToAdd, User connectedUser) {
+
+    if (!channel.getCreator().getUserTag().equals(connectedUser.getUserTag())) {
+        JOptionPane.showMessageDialog(null,
+                "Seul le créateur peut modifier ce canal.",
+                "Erreur",
+                JOptionPane.WARNING_MESSAGE);
+        return;
     }
 
-    /**
-     * Vérifie si l'utilisateur connecté peut supprimer un canal.
-     */
-    public boolean canDelete(Channel channel, User connectedUser) {
-        if (channel == null || connectedUser == null) return false;
-        return channel.getCreator().getUserTag().equals(connectedUser.getUserTag());
-    }
-    public User findUser(String tag) {
-        return mDataManager.getUser(tag);
+    List<User> users = new ArrayList<>(channel.getUsers());
+
+    if (users.contains(userToAdd)) {
+        JOptionPane.showMessageDialog(null,
+                "Cet utilisateur est déjà dans le canal.",
+                "Information",
+                JOptionPane.INFORMATION_MESSAGE);
+        return;
     }
 
-    /** Ajoute un utilisateur à un canal privé (SRS-MAP-CHN-007). */
-    public void addUserToChannel(Channel channel, User userToAdd, User connectedUser) {
-        if (!channel.getCreator().getUserTag().equals(connectedUser.getUserTag())) {
-            JOptionPane.showMessageDialog(null,
-                    "Seul le créateur peut modifier ce canal.",
-                    "Erreur", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        List<User> users = new ArrayList<>(channel.getUsers());
-        users.add(userToAdd);
-        Channel updated = new Channel(channel.getUuid(), channel.getCreator(),
-                channel.getName(), users);
-        mDataManager.sendChannel(updated);
+    users.add(userToAdd);
+
+    Channel updated = new Channel(
+            channel.getUuid(),
+            channel.getCreator(),
+            channel.getName(),
+            users
+    );
+
+    mDataManager.sendChannel(updated);
+}
+
+/** Retire un utilisateur d'un canal privé (SRS-MAP-CHN-087). */
+public void removeUserFromChannel(Channel channel, User userToRemove, User connectedUser) {
+
+    if (!channel.getCreator().getUserTag().equals(connectedUser.getUserTag())) {
+        JOptionPane.showMessageDialog(null,
+                "Seul le créateur peut modifier ce canal.",
+                "Erreur",
+                JOptionPane.WARNING_MESSAGE);
+        return;
     }
 
-    /** Retire un utilisateur d'un canal privé (SRS-MAP-CHN-087). */
-    public void removeUserFromChannel(Channel channel, User userToRemove, User connectedUser) {
-        if (!channel.getCreator().getUserTag().equals(connectedUser.getUserTag())) {
-            JOptionPane.showMessageDialog(null,
-                    "Seul le créateur peut modifier ce canal.",
-                    "Erreur", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        List<User> users = new ArrayList<>(channel.getUsers());
-        users.remove(userToRemove);
-        Channel updated = new Channel(channel.getUuid(), channel.getCreator(),
-                channel.getName(), users);
-        mDataManager.sendChannel(updated);
+    if (userToRemove.getUserTag().equals(channel.getCreator().getUserTag())) {
+        JOptionPane.showMessageDialog(null,
+                "Impossible de supprimer le créateur du canal.",
+                "Erreur",
+                JOptionPane.WARNING_MESSAGE);
+        return;
     }
+
+    List<User> users = new ArrayList<>(channel.getUsers());
+
+    if (!users.contains(userToRemove)) {
+        JOptionPane.showMessageDialog(null,
+                "Cet utilisateur n'est pas dans le canal.",
+                "Information",
+                JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    users.remove(userToRemove);
+
+    Channel updated = new Channel(
+            channel.getUuid(),
+            channel.getCreator(),
+            channel.getName(),
+            users
+    );
+
+    mDataManager.sendChannel(updated);
+}
 }

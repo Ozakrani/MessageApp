@@ -12,7 +12,7 @@ import java.util.UUID;
 import main.java.com.ubo.tp.message.common.Constants;
 import main.java.com.ubo.tp.message.common.DataFilesManager;
 import main.java.com.ubo.tp.message.core.directory.IWatchableDirectoryObserver;
-import main.java.com.ubo.tp.message.datamodel.Channel;
+import com.ubo.tp.message.datamodel.Channel;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
 import java.io.File;
@@ -507,6 +507,20 @@ public class EntityManager implements IWatchableDirectoryObserver {
 			Files.deleteIfExists(path);
 		} catch (IOException e) {
 			throw new RuntimeException("Erreur lors de la suppression du canal.", e);
+		}
+	}
+	public void deleteUserFile(User user) {
+
+		if (mDirectoryPath == null) {
+			throw new RuntimeException("Le répertoire d'échange n'est pas configuré !");
+		}
+
+		String filename = user.getUuid().toString() + Constants.USER_FILE_EXTENSION;
+
+		File file = new File(mDirectoryPath, filename);
+
+		if (file.exists()) {
+			file.delete();
 		}
 	}
 }

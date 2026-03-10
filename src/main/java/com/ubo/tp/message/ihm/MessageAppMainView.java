@@ -1,4 +1,4 @@
-package main.java.com.ubo.tp.message.ihm;
+package com.ubo.tp.message.ihm;
 
 import main.java.com.ubo.tp.message.controller.LoginController;
 import main.java.com.ubo.tp.message.core.session.ISessionObserver;
@@ -17,7 +17,7 @@ import java.io.File;
  */
 public class MessageAppMainView extends JFrame implements ISessionObserver {
 
-    private MessageApp application;
+    private com.ubo.tp.message.ihm.MessageApp application;
     private LoginPanel loginPanel;
     private LoginController loginController;
     private JPanel mainPanel;
@@ -29,7 +29,7 @@ public class MessageAppMainView extends JFrame implements ISessionObserver {
      *
      * @param app L'application principale
      */
-    public MessageAppMainView(MessageApp app) {
+    public MessageAppMainView(com.ubo.tp.message.ihm.MessageApp app) {
         this.application = app;
         initComponents();
     }
@@ -86,7 +86,11 @@ public class MessageAppMainView extends JFrame implements ISessionObserver {
      * Affiche l'interface principale après connexion.
      */
     public void showMainInterface(User user) {
-        mainPanel = new MainPanel(user, application.getDataManager());
+        mainPanel = new MainPanel(
+                user,
+                application.getDataManager(),
+                application.getSession()
+        );
         setContentPane(mainPanel);
         revalidate();
         repaint();

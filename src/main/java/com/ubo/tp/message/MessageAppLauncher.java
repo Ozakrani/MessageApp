@@ -1,12 +1,13 @@
-package main.java.com.ubo.tp.message;
+package com.ubo.tp.message;
 
-import main.java.com.ubo.tp.message.core.DataManager;
+import com.ubo.tp.message.core.DataManager;
 import main.java.com.ubo.tp.message.core.database.ConsoleDatabase;
 import main.java.com.ubo.tp.message.core.database.Database;
 import main.java.com.ubo.tp.message.core.database.DbConnector;
 import main.java.com.ubo.tp.message.core.database.EntityManager;
-import main.java.com.ubo.tp.message.ihm.MessageApp;
-import main.java.com.ubo.tp.message.ihm.MessageAppMainView;
+import com.ubo.tp.message.ihm.MessageApp;
+import com.ubo.tp.message.ihm.MessageAppMainView;
+
 import mock.MessageAppMock;
 
 /**
