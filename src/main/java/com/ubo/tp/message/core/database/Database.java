@@ -155,7 +155,6 @@ public class Database implements IDatabase {
 		}
 
 	}
-
 	@Override
 	public void modifyChannel(Channel channelToModify) {
 		// Supprimer l'ancien canal

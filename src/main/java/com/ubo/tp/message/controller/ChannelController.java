@@ -50,6 +50,11 @@ public class ChannelController {
         // Crée un canal privé avec les utilisateurs spécifiés
         Channel channel = new Channel(creator, channelName.trim(), users);
 
+        // Le canal est privé tant qu'il contient des utilisateurs
+        if (!users.isEmpty()) {
+            channel.setPrivate(true);  // Assurer que le canal est privé si des utilisateurs sont présents
+        }
+
         // Envoie le canal à DataManager pour être sauvegardé dans le fichier
         mDataManager.sendChannel(channel);
 
@@ -112,6 +117,7 @@ public class ChannelController {
     }
 
     public void addUserToChannel(Channel channel, User userToAdd, User connectedUser) {
+        // Vérification que l'utilisateur connecté est bien le créateur du canal
         if (!channel.getCreator().getUserTag().equals(connectedUser.getUserTag())) {
             JOptionPane.showMessageDialog(null, "Seul le créateur peut modifier ce canal.", "Erreur", JOptionPane.WARNING_MESSAGE);
             return;
@@ -124,13 +130,13 @@ public class ChannelController {
             return;
         }
 
-        // Ajout de l'utilisateur au canal
+        // Ajouter l'utilisateur à la liste des utilisateurs
         users.add(userToAdd);
 
-        // Créer un nouveau canal avec les utilisateurs mis à jour
+        // Créer un nouveau canal avec la liste des utilisateurs mise à jour
         Channel updatedChannel = new Channel(channel.getUuid(), channel.getCreator(), channel.getName(), users);
 
-        // Mettre à jour le fichier exchange avec les UUIDs des utilisateurs
+        // Enregistrer le canal mis à jour dans la base de données
         mDataManager.sendChannel(updatedChannel);
         System.out.println("Utilisateur ajouté au canal : " + userToAdd.getUserTag());
     }
@@ -146,14 +152,23 @@ public class ChannelController {
             JOptionPane.showMessageDialog(null, "Impossible de supprimer le créateur du canal.", "Erreur", JOptionPane.WARNING_MESSAGE);
             return;
         }
+
         List<User> users = new ArrayList<>(channel.getUsers());
         if (!users.contains(userToRemove)) {
             JOptionPane.showMessageDialog(null, "Cet utilisateur n'est pas dans le canal.", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        // Retirer l'utilisateur
         users.remove(userToRemove);
+
+        // Si le canal est désormais vide, le rendre public
+        if (users.isEmpty()) {
+            channel.setPrivate(false);  // Le canal devient public
+        }
+
+        // Créer un nouveau canal avec les utilisateurs mis à jour
         Channel updated = new Channel(channel.getUuid(), channel.getCreator(), channel.getName(), users);
-        mDataManager.sendChannel(updated);
+        mDataManager.sendChannel(updated);  // Mettre à jour le fichier exchange
     }
 
     // Vérifie si un utilisateur est dans le canal en fonction de son userTag

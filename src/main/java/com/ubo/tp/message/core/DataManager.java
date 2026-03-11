@@ -117,11 +117,12 @@ public class DataManager {
 	 */
 
 	public void sendChannel(Channel channel) {
-		// Assurer la mise à jour de la base de données et la réécriture des fichiers
+		// Sauvegarde le canal dans un fichier
 		this.mEntityManager.writeChannelFile(channel);
-		this.mDatabase.modifyChannel(channel);  // Mise à jour dans la base de données
-	}
 
+		// Mise à jour du canal dans la base de données
+		this.mDatabase.modifyChannel(channel);  // Mise à jour de la base de données
+	}
 	/**
 	 * Retourne tous les Messages d'un utilisateur.
 	 *

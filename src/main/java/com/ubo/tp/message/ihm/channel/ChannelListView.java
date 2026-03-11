@@ -207,7 +207,6 @@ public class ChannelListView extends JPanel {
         panel.add(south, BorderLayout.SOUTH);
         JOptionPane.showMessageDialog(this, panel, "Modifier canal", JOptionPane.PLAIN_MESSAGE);
     }
-
     // ===== API =====
     public void setChannelSelectionListener(main.java.com.ubo.tp.message.ihm.channel.IChannelSelectionListener listener) {
         this.mChannelSelectionListener = listener;

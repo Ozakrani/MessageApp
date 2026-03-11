@@ -50,6 +50,9 @@ public class Channel extends main.java.com.ubo.tp.message.datamodel.AbstractMess
 	 * @param sender      utilisateur à l'origine du canal.
 	 * @param name        Nom du canal.
 	 */
+	public void setPrivate(boolean isPrivate) {
+		this.mPrivate = isPrivate;
+	}
 	public Channel(UUID channelUuid, User creator, String name) {
 		super(channelUuid);
 		mCreator = creator;
