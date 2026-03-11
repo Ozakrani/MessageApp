@@ -43,10 +43,17 @@ public class ChannelController {
             JOptionPane.showMessageDialog(null, "Le nom du canal ne peut pas être vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
             return null;
         }
+        // On supprime le créateur de la liste des utilisateurs
         users.removeIf(u -> u.getUserTag().equals(creator.getUserTag()));
+
         Channel channel = new Channel(creator, channelName.trim(), users);
-        mDataManager.sendChannel(channel); // ajout immédiat
+
+        // Envoie le canal à DataManager pour être sauvegardé
+        mDataManager.sendChannel(channel);
+
+        // Ajoute le canal à la liste des canaux de l'utilisateur
         mDataManager.addChannel(channel);
+
         return channel;
     }
 
@@ -79,18 +86,17 @@ public class ChannelController {
     public List<Channel> getChannels(User connectedUser) {
         List<Channel> visibleChannels = new ArrayList<>();
         for (Channel c : mDataManager.getChannels()) {
-            // canal public
+            // Si le canal est public, il est visible pour tous
             if (c.getUsers().isEmpty()) {
                 visibleChannels.add(c);
             }
-            // canal privé : visible pour créateur ou membre
+            // Si le canal est privé, il est visible pour le créateur ou les membres
             else if (c.getCreator().getUserTag().equals(connectedUser.getUserTag()) || containsUserByTag(c.getUsers(), connectedUser.getUserTag())) {
                 visibleChannels.add(c);
             }
         }
         return visibleChannels;
     }
-
     /**
      * Vérifie si l'utilisateur connecté peut supprimer un canal.
      */
@@ -104,48 +110,27 @@ public class ChannelController {
     }
 
     public void addUserToChannel(Channel channel, User userToAdd, User connectedUser) {
-        // Vérifie que l'utilisateur qui tente d'ajouter est bien le créateur du canal
         if (!channel.getCreator().getUserTag().equals(connectedUser.getUserTag())) {
             JOptionPane.showMessageDialog(null, "Seul le créateur peut modifier ce canal.", "Erreur", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Vérifie que l'utilisateur à ajouter est valide
-        if (userToAdd == null) {
-            JOptionPane.showMessageDialog(null, "Utilisateur introuvable.", "Erreur", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Assure que l'utilisateur n'est pas déjà le créateur du canal
-        if (userToAdd.getUserTag().equals(channel.getCreator().getUserTag())) {
-            JOptionPane.showMessageDialog(null, "Le créateur ne doit pas être ajouté comme membre.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        // Vérifie si l'utilisateur est déjà membre du canal
+        // Vérification si l'utilisateur est déjà dans la liste des utilisateurs
         List<User> users = new ArrayList<>(channel.getUsers());
         if (containsUserByTag(users, userToAdd.getUserTag())) {
             JOptionPane.showMessageDialog(null, "Cet utilisateur est déjà dans le canal.", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
-        // Ajouter l'utilisateur au canal
+        // Ajout de l'utilisateur au canal
         users.add(userToAdd);
-        Channel updated = new Channel(channel.getUuid(), channel.getCreator(), channel.getName(), users);
 
-        // Enregistrer le canal mis à jour
-        mDataManager.sendChannel(updated);
-        System.out.println("Utilisateur ajouté au canal : @" + userToAdd.getUserTag());
-    }
+        // Créer un nouveau canal avec les utilisateurs mis à jour
+        Channel updatedChannel = new Channel(channel.getUuid(), channel.getCreator(), channel.getName(), users);
 
-    // Helper method to check if a user is in the channel by userTag
-    private boolean containsUserByTag(List<User> users, String tag) {
-        for (User u : users) {
-            if (u.getUserTag().equals(tag)) {
-                return true;
-            }
-        }
-        return false;
+        // Mettre à jour le fichier exchange avec les UUIDs des utilisateurs
+        mDataManager.sendChannel(updatedChannel);
+        System.out.println("Utilisateur ajouté au canal : " + userToAdd.getUserTag());
     }
     /**
      * Retire un utilisateur d'un canal privé (SRS-MAP-CHN-087).
@@ -167,6 +152,16 @@ public class ChannelController {
         users.remove(userToRemove);
         Channel updated = new Channel(channel.getUuid(), channel.getCreator(), channel.getName(), users);
         mDataManager.sendChannel(updated);
+    }
+
+    // Vérifie si un utilisateur est dans le canal en fonction de son userTag
+    private boolean containsUserByTag(List<User> users, String tag) {
+        for (User user : users) {
+            if (user.getUserTag().equals(tag)) {
+                return true;  // Si un utilisateur avec ce tag est trouvé, retourne true
+            }
+        }
+        return false;  // Sinon, retourne false
     }
 
 }

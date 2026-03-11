@@ -217,9 +217,8 @@ public class ChannelListView extends JPanel {
         mChannelListModel.clear();
         List<Channel> channels = mController.getChannels(mCurrentUser);
         for (Channel channel : channels) {
-            mChannelListModel.addElement(channel);
+            mChannelListModel.addElement(channel);  // Ajouter le canal à la vue
         }
-        // Rafraîchir les vues des canaux après chaque action
-        mChannelList.repaint();
+        mChannelList.repaint();  // Rafraîchir l'affichage
     }
 }
