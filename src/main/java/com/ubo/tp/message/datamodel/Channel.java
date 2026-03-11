@@ -104,6 +104,9 @@ public class Channel extends main.java.com.ubo.tp.message.datamodel.AbstractMess
 		return new ArrayList<User>(mUsers);
 	}
 
+	public boolean isPrivate() {
+		return mPrivate;
+	}
 	/**
 	 * {@inheritDoc}
 	 */

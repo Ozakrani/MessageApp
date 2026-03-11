@@ -133,12 +133,24 @@ public class DataFilesManager {
 		// Récupération du chemin pour le fichier à générer
 		String destFileName = this.getFileName(channel.getUuid(), Constants.CHANNEL_FILE_EXTENSION);
 
+		// Ajouter les informations du canal dans les propriétés
 		properties.setProperty(PROPERTY_KEY_UUID, channel.getUuid().toString());
 		properties.setProperty(PROPERTY_KEY_NAME, channel.getName());
 		properties.setProperty(PROPERTY_KEY_CHANNEL_CREATOR, channel.getCreator().getUuid().toString());
-		properties.setProperty(PROPERTY_KEY_CHANNEL_USERS, this.getUsersAsString(channel.getUsers()));
+		properties.setProperty(PROPERTY_KEY_CHANNEL_USERS, this.getUsersAsString(channel.getUsers())); // Ajouter les utilisateurs
 
-		PropertiesManager.writeProperties(properties, destFileName);
+		// Écrire les propriétés dans le fichier
+		main.java.com.ubo.tp.message.common.PropertiesManager.writeProperties(properties, destFileName);
+	}
+	public String getUsersAsString(List<User> users) {
+		StringBuilder usersStr = new StringBuilder();
+		for (User user : users) {
+			if (usersStr.length() > 0) {
+				usersStr.append(";");  // Séparer les utilisateurs par un point-virgule
+			}
+			usersStr.append(user.getUserTag());  // Ajouter le tag de chaque utilisateur
+		}
+		return usersStr.toString();
 	}
 
 	/**
@@ -267,20 +279,6 @@ public class DataFilesManager {
 	 * 
 	 * @param users
 	 */
-	protected String getUsersAsString(List<User> users) {
-		String usersAsString = "";
-
-		Iterator<User> iterator = users.iterator();
-		while (iterator.hasNext()) {
-			usersAsString += iterator.next();
-
-			if (iterator.hasNext()) {
-				usersAsString += USER_SEPARATOR;
-			}
-		}
-
-		return usersAsString;
-	}
 
 	/**
 	 * Retourne la liste des utilisateurs depuis une chaine de caractère.

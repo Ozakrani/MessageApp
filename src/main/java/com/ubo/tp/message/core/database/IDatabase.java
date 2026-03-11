@@ -48,4 +48,6 @@ public interface IDatabase {
 	 */
 	void deleteMessage(Message message);
 	void deleteUser(User user);
-	void modifyUser(User user);}
+	void modifyUser(User user);
+	void modifyChannel(Channel channel);
+}

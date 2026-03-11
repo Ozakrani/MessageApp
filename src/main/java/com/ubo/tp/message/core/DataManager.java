@@ -115,9 +115,11 @@ public class DataManager {
 	 *
 	 * @param channel
 	 */
+
 	public void sendChannel(Channel channel) {
-		// Ecrit un canal
+		// Assurer la mise à jour de la base de données et la réécriture des fichiers
 		this.mEntityManager.writeChannelFile(channel);
+		this.mDatabase.modifyChannel(channel);  // Mise à jour dans la base de données
 	}
 
 	/**
@@ -295,7 +297,6 @@ public class DataManager {
 
 		return result;
 	}
-
 
 
 }

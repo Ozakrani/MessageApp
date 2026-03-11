@@ -87,6 +87,10 @@ public class User extends AbstractMessageAppObject implements IMessageRecipient 
 		return this.mUserPassword;
 	}
 
+	public String getmUserTag() {
+		return mUserTag;
+	}
+
 	/**
 	 * Assigne le mot de passe de l'utilisateur.
 	 *
@@ -111,6 +115,7 @@ public class User extends AbstractMessageAppObject implements IMessageRecipient 
 	public void setOnline(boolean online) {
 		this.mOnline = online;
 	}
+
 
 	@Override
 	public String toString() {
