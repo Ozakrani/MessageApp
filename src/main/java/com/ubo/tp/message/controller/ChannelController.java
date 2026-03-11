@@ -43,12 +43,14 @@ public class ChannelController {
             JOptionPane.showMessageDialog(null, "Le nom du canal ne peut pas être vide.", "Erreur", JOptionPane.WARNING_MESSAGE);
             return null;
         }
-        // On supprime le créateur de la liste des utilisateurs
+
+        // Supprime le créateur de la liste des utilisateurs (le créateur est toujours membre du canal)
         users.removeIf(u -> u.getUserTag().equals(creator.getUserTag()));
 
+        // Crée un canal privé avec les utilisateurs spécifiés
         Channel channel = new Channel(creator, channelName.trim(), users);
 
-        // Envoie le canal à DataManager pour être sauvegardé
+        // Envoie le canal à DataManager pour être sauvegardé dans le fichier
         mDataManager.sendChannel(channel);
 
         // Ajoute le canal à la liste des canaux de l'utilisateur

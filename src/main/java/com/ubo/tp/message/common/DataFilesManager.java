@@ -137,7 +137,9 @@ public class DataFilesManager {
 		properties.setProperty(PROPERTY_KEY_UUID, channel.getUuid().toString());
 		properties.setProperty(PROPERTY_KEY_NAME, channel.getName());
 		properties.setProperty(PROPERTY_KEY_CHANNEL_CREATOR, channel.getCreator().getUuid().toString());
-		properties.setProperty(PROPERTY_KEY_CHANNEL_USERS, this.getUsersAsString(channel.getUsers())); // Ajouter les utilisateurs
+
+		// Ajouter les utilisateurs avec leurs UUIDs
+		properties.setProperty(PROPERTY_KEY_CHANNEL_USERS, this.getUsersAsString(channel.getUsers()));
 
 		// Écrire les propriétés dans le fichier
 		main.java.com.ubo.tp.message.common.PropertiesManager.writeProperties(properties, destFileName);
@@ -244,13 +246,13 @@ public class DataFilesManager {
 			UUID validUuid = UUID.fromString(uuid);
 			User user = userMap.get(validUuid);
 			if (user == null) {
-				user = userMap.get(Constants.UNKNONWN_USER_UUID);
+				user = userMap.get(main.java.com.ubo.tp.message.common.Constants.UNKNONWN_USER_UUID);
 			}
 			return user;
 		} catch (IllegalArgumentException e) {
 			// Gère les UUID non valides
 			System.err.println("UUID invalide détecté : " + uuid);
-			return userMap.get(Constants.UNKNONWN_USER_UUID);
+			return userMap.get(main.java.com.ubo.tp.message.common.Constants.UNKNONWN_USER_UUID);
 		}
 	}
 

@@ -157,8 +157,17 @@ public class Database implements IDatabase {
 	}
 
 	@Override
-	public void modifyChannel(Channel channel) {
+	public void modifyChannel(Channel channelToModify) {
+		// Supprimer l'ancien canal
+		this.mChannels.remove(channelToModify);
 
+		// Ajouter le canal modifié
+		this.mChannels.add(channelToModify);
+
+		// Notifier les observateurs du changement de canal
+		for (IDatabaseObserver observer : mObservers) {
+			observer.notifyChannelModified(channelToModify);
+		}
 	}
 
 	/**
